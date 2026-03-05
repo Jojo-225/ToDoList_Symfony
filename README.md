@@ -1,4 +1,4 @@
-# ✅ ToDoList — Symfony + MySQL
+# ToDoList — Symfony + MySQL
 
 Ce dépôt correspond à la **Version 1** du projet ToDoList : une application Symfony permettant de gérer des tâches (CRUD) avec persistance en base de données MySQL.
 
