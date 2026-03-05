@@ -14,7 +14,12 @@
     <a href="{{path('tache.editIsDone', {'id': tache.id})}}"  class="btn btn-primary">Terminée</a>
   </div>
   <div class="card-footer text-muted">
-    {{tache.dueDate|date('Y-m-d')}}
+  {% if tache.dueDate|date('U') - tache.createdAt|date('U') > 0 %}
+    {{ (tache.dueDate|date('U') - tache.createdAt|date('U')) // 86400 }} jours restants
+  {% else %}
+    Échéance dépassée
+  {% endif %}
+   </div>
   </div>
 </div>
     
