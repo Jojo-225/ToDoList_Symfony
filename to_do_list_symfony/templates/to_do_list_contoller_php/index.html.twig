@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ToDoListContollerPhpController!{% endblock %}
+
+{% block body %}
+<p class="fs-3">Liste des tâches</p>
+<p>
+    <a href="{{ path('tache.create') }}" class="btn btn-success">Ajouter une tâche</a>
+</p>
+<table class="table table-striped">
+  <thead>
+  
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Titre</th>
+      <th scope="col">Description</th>
+      <th scope="col">Écheance</th>
+      <th scope="col">Actions</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    {% for tache in taches %}
+    <tr>
+      <th scope="row">{{ tache.id }}</th>
+      <td>{{ tache.title }}</td>
+      <td>{{ tache.description }}</td>
+      <td>{{ tache.dueDate|date('Y-m-d') }}</td>
+        <td>
+            <a href="#" class="btn btn-primary">Voir</a>
+            <a href="#" class="btn btn-secondary">Modifier</a>
+            <form action="#" method="post" style="display:inline-block;">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ tache.id) }}">
+            <button type="submit" class="btn btn-danger">Supprimer</button>
+            </form>
+    </tr>
+   
+    {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock %}
