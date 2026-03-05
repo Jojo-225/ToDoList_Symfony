@@ -1,0 +1,22 @@
+{%- extends 'base.html.twig' -%}
+
+{% block title %}Créer une tâche{% endblock %}
+
+{% block body %}
+    <div class="card text-center">
+  <div class="card-header">
+   Tâches
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{tache.title}}</h5>
+    <p class="card-text">{{tache.description}}</p>
+
+    <a href="{{path('tache.editIsDone', {'id': tache.id})}}"  class="btn btn-primary">Terminée</a>
+  </div>
+  <div class="card-footer text-muted">
+    {{tache.dueDate|date('Y-m-d')}}
+  </div>
+</div>
+    
+
+{% endblock %}

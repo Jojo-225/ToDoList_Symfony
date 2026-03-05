@@ -78,6 +78,10 @@ class ToDoList
 
         return $this;
     }
+    public function getIsDone(): ?bool
+    {
+        return $this->isDone;
+    }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {

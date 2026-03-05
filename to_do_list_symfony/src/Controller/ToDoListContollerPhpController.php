@@ -33,7 +33,7 @@ final class ToDoListContollerPhpController extends AbstractController
    }
 
    #[Route('/taches/{id}/edit', name: 'tache.edit', methods: ['GET', 'POST'])]
-   public function create(Request $request, EntityManagerInterface $em): Response
+   public function edit(ToDoList $tache, Request $request, EntityManagerInterface $em): Response
    {
        $form = $this->createForm(ToDoListType::class, $tache);
        $form->handleRequest($request);
@@ -47,8 +47,18 @@ final class ToDoListContollerPhpController extends AbstractController
            'form' => $form->createView(),
        ]);
    }
-      #[Route('/taches/create', name: 'tache.create')]
-     public function create(Request $request, EntityManagerInterface $em): Response{
+
+
+   #[Route('/taches/{id}/editIsDone', name: 'tache.editIsDone', methods: ['POST','GET'])]
+    public function editIsDone(ToDoList $tache, EntityManagerInterface $em): Response{
+        $tache->setIsDone(!$tache->getIsDone());
+        $em->flush();
+        $this->addFlash('success', 'La tâche a été modifée avec succès.');
+        return $this->redirectToRoute('tache.index');
+    }
+
+    #[Route('/taches/create', name: 'tache.create')]
+    public function create(Request $request, EntityManagerInterface $em): Response{
         $todolist= new ToDoList();
        $form = $this->createForm(ToDoListType::class, $todolist);
        $form->handleRequest($request);
@@ -63,5 +73,14 @@ final class ToDoListContollerPhpController extends AbstractController
            'form' => $form->createView(),
        ]);
    }
+
+   #[Route('/taches/{id}/delete', name: 'tache.delete', methods: ['POST'])]
+   public function delete(ToDoList $tache, EntityManagerInterface $em): Response
+   {       $em->remove($tache);
+       $em->flush();
+       $this->addFlash('success', 'La tâche a été supprimée avec succès.');
+       return $this->redirectToRoute('tache.index');    
+   }
+   
 
 }

@@ -15,6 +15,8 @@
       <th scope="col">Titre</th>
       <th scope="col">Description</th>
       <th scope="col">Écheance</th>
+      <th scope="col">Statut</th>
+
       <th scope="col">Actions</th>
 
     </tr>
@@ -26,14 +28,32 @@
       <td>{{ tache.title }}</td>
       <td>{{ tache.description }}</td>
       <td>{{ tache.dueDate|date('Y-m-d') }}</td>
-        <td>
-            <a href="#" class="btn btn-primary">Voir</a>
-            <a href="#" class="btn btn-secondary">Modifier</a>
-            <form action="#" method="post" style="display:inline-block;">
-            <input type="hidden" name="_method" value="DELETE">
+  
+      <td>
+        {% if tache.isDone%}
+           <form action="#" method="post" style="display:inline-block;">
+          <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ tache.id) }}">
             <button type="submit" class="btn btn-danger">Supprimer</button>
             </form>
+          
+        {% else %}
+          <a href="{{path('tache.show',{'id':tache.id})}}" class="btn btn-primary">Voir</a>
+         <a href="{{path('tache.edit',{'id':tache.id})}}" class="btn btn-secondary">Modifier</a>
+          <form action="#" method="post" style="display:inline-block;">
+          <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ tache.id) }}">
+            <button type="submit" class="btn btn-danger">Supprimer</button>
+            </form>
+        {% endif %}
+      </td>
+          <td>
+          {% if tache.isDone %}
+              <span class="badge bg-success">Terminée</span>
+          {% else %}
+              <span class="badge bg-warning">En cours</span>
+          {% endif %}
+      </td>
     </tr>
    
     {% endfor %}
