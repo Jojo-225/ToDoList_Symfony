@@ -40,6 +40,37 @@ Ce dépôt correspond à la **Version 1** du projet ToDoList : une application S
 ## ⚙️ Installation & lancement
 
 ### 1) Cloner le projet
-```bash
+
 git clone <url-du-projet>
 cd <nom-du-projet>
+
+---
+
+### 2) Cloner le projet
+
+composer install
+
+### 3) Configurer la base de données (MySQL)
+
+Crée un fichier .env.local à la racine du projet (recommandé, non versionné) et ajoute :
+
+DATABASE_URL="mysql://app:ChangeMe!2026@127.0.0.1:3306/main?charset=utf8mb4"
+
+Remplace app, ChangeMe!2026 et main par tes identifiants / nom de base si besoin.
+Utiliser 127.0.0.1 évite certains problèmes de socket sur macOS.
+
+### 4) Créer la base de données
+
+php bin/console doctrine:database:create
+
+### 5) Exécuter les migrations (créer les tables)
+
+php bin/console doctrine:migration:migrate
+Si la migration n'existe pas, faire préalablement: 
+php bin/console make:migration
+
+
+## Démarrer l’application
+
+symfony serve
+
